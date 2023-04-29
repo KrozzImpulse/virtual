@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>FigmaStore - Tu Cuenta</title>
+  <script type="text/javascript" src="Assets/js/barnav.js"></script>
+  <link rel="shortcut icon" href="Assets/icons/logo_head.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="cuenta.css">
+
+</head>
+
+<body>
+
+<div id="insertar-barra"></div>
+<div class="container">
+    <div class="title">
+        <p class="title">Cuenta</p>
+    </div>
+    <div class="info-container">
+        <div class="text">
+            <h1>Nombre :</h1>
+            <p class="Nombre" id="Nombre">
+            </p>
+        </div>
+        <div class="text">
+            <h1>Apellido :</h1>
+            <p class="Apellido" id="Apellido">
+            </p>
+        </div>
+        <div class="text">
+            <h1>Correo :</h1>
+            <p class="Correo" id="Correo">
+            </p>
+        </div>
+        <div class="buttons">
+            <button class="button"><a href="inicio.html" style="color:rgb(255, 255, 255)">Volver al inicio</a></button>
+            <button class="button"><a onClick="cerrar_sesion()" style="color:rgb(255, 255, 255)">Cerrar Sesion </a> </button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var respuesta;
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        respuesta=JSON.parse(this.responseText);
+            document.getElementById("Nombre").innerHTML = `${respuesta[0].Nombre}`;
+            document.getElementById("Apellido").innerHTML = `${respuesta[0].Apellido}`;
+            document.getElementById("Correo").innerHTML = `${respuesta[0].Correo}`;
+
+    };
+    xhr.open("POST",backendSketis+"datosCuenta.php",true);
+    xhr.withCredentials = true;
+    xhr.send();
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

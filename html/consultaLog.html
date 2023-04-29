@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FigmaStore - Registro Almacenista</title>
+    <link rel="shortcut icon" href="Assets/icons/logo_head.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="Assets/js/barnav.js"></script>
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" type="text/css" media="screen" href="Assets/js/bootstrap/css/bootstrap.css" />
+    <style>
+        #datePicker {
+            width: 10%;
+            float: right;
+            margin-right: 20px;
+            margin-top: 3%;
+            margin-bottom: 2%;
+        }
+
+        .padre {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        #contenedor {
+            width: 100%;
+            border: 1px solid black;
+            background-color: white;
+            border-radius: 10px;
+            margin-left: 20%;
+            margin-right: 20%;
+            height: 500px;
+            margin-bottom: 3%;
+            overflow-y: scroll;
+        }
+
+        .log {
+            padding: 10px;
+            margin-right: 5%;
+            margin-left: 5%;
+
+        }
+
+        .panel-heading {
+            background: #494949;
+            color: white;
+        }
+        .lecoca{
+            float: right;
+            margin-top: 3%;
+            margin-right: 20%;
+            margin-bottom: 2%;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="insertar-barra"></div>
+
+<!-- CACHE -->
+<div class="cache"></div>
+
+<!-- Portafolio de WRAPs -->
+<div>
+    <div class="panel-heading">
+        <h3 style="text-align: center">
+            Historial LOG
+        </h3>
+    </div>
+    <button class="lecoca" onclick="clickDate()">Filtrar</button>
+    <input id="datePicker" type="date" name="fecha" >
+
+</div>
+
+<div class="padre">
+    <div  id="contenedor">
+        <!-- aqui se imprime el log-->
+    </div>
+</div>
+
+<!-- SCRIPT -->
+
+<script src="Assets/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="Assets/js/main.min.js"></script>
+<script>
+    var log = "";
+    var logAcomodado="";
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        console.log(this.responseText);
+        log=this.responseText;
+
+        logAcomodado = log.split("\n");//separa en un arreglo hasta que encuentre un punto
+        for (let i = 0; i < logAcomodado.length; i++) {
+            document.getElementById("contenedor").innerHTML +=
+                `<h5 class="log">${logAcomodado[i]}</h5>`;
+        }
+
+
+
+    };
+    xhr.open("POST",backendSketis+ "log.php", true);
+    xhr.withCredentials=true;
+    xhr.send();
+
+    function clickDate() {
+        let date = document.getElementById("datePicker").value;
+        if (date!=="") {// si no es null
+
+            document.getElementById("contenedor").innerHTML = "";//limpio
+            for (let i = 0; i < logAcomodado.length; i++) {
+                if (logAcomodado[i].search(date) != -1) {//si la fecha coincide
+                    document.getElementById("contenedor").innerHTML += //imprime lo filtrado
+                        `<ul class="log">${logAcomodado[i]}</ul>`;
+                }
+            }
+
+        } else {
+            alert("Ingrese una fecha");
+            alert(date);
+        }
+    }
+
+</script>
+
+</body>
+</html>
