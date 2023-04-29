@@ -1,0 +1,1 @@
+alert("Se ha registrado al almacenista exitosamente!!!");
